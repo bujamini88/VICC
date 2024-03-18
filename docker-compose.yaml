@@ -6,12 +6,15 @@ services:
     container_name: db
     restart: always
     environment:
-      - MARIADB_ROOT_PASSWORD=Password
+      MYSQL_DATABASE: mysql
+      MYSQL_ROOT_PASSWORD: Password
+
     expose:
       - 3306
     volumes:
       - /opt/db:/var/lib/mysql
-      
+      - /opt/db/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
   nginx:
     image: nginx:latest
     container_name: nginx
