@@ -6,7 +6,7 @@ conn = None
 
 @app.route("/")
 def hello():
-    return "Flask inside Docker!!"
+    return "Hello World"
 
 
 if __name__ == '__main__':
