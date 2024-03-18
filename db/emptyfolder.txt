@@ -1,3 +1,0 @@
-This folder is empty on purpose. 
-On first startup, the container will create all the needed structure
-test
