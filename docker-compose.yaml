@@ -13,7 +13,7 @@ services:
       - 3306
     volumes:
       - /opt/db:/var/lib/mysql
-      - /opt/db/schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - /opt/schema.sql:/docker-entrypoint-initdb.d/init.sql
 
   nginx:
     image: nginx:latest
