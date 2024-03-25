@@ -47,11 +47,15 @@ app.secret_key = '94b8f1a06e8a4e09614cb6335e7af197'  # Secret für Session MGMT
 @app.route("/")
 def index():
     user = None
+    public_posts = db_session.query(Post).filter_by(public=True).all()
+    private_posts = [] 
+
     if 'user_id' in flask_session:
         user_id = flask_session['user_id']
         user = db_session.query(User).filter_by(id=user_id).first()
-    public_posts = db_session.query(Post).filter_by(public=True).all()
-    return render_template('index.html', public_posts=public_posts, user=user)
+        private_posts = db_session.query(Post).filter_by(public=False, user_id=user_id).all()
+
+    return render_template('index.html', public_posts=public_posts, private_posts=private_posts, user=user)
 
 @app.route("/create_post", methods=["GET", "POST"])
 def create_post():
