@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Post</title>
+    <title>Post erstellen</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
-        <h2>Create a New Post</h2>
+        <h2>Post erstellen</h2>
         <form action="/create_post" method="post" class="create-post-form">
             <div class="form-field">
-                <label for="title">Title:</label>
+                <label for="title">Titel:</label>
                 <input type="text" name="title" id="title" required>
             </div>
             <div class="form-field">
-                <label for="content">Content:</label>
+                <label for="content">Inhalt:</label>
                 <textarea name="content" id="content" required></textarea>
             </div>
             <div class="form-field">
-                <label for="public">Public:</label>
+                <label for="public">Öffentlich:</label>
                 <input type="checkbox" name="public" id="public" checked>
             </div>
             <div class="form-action">
-                <input type="submit" value="Create Post">
+                <input type="submit" value="Post erstellen">
             </div>
         </form>
     </div>
