@@ -1,0 +1,97 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px; /* Increased max-width for better utilization of space on larger screens */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-container, .signup-container, .posts-container, .create-post-container {
+    margin-bottom: 30px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-field input[type="email"],
+.form-field input[type="password"],
+.form-field input[type="text"],
+.create-post-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-action {
+    text-align: right;
+}
+
+.form-action input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-action input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.posts-container, .create-post-container {
+    margin-top: 30px;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .form-field input[type="email"],
+    .form-field input[type="password"],
+    .form-field input[type="text"],
+    .create-post-form textarea {
+        padding: 10px;
+    }
+
+    .form-action input[type="submit"] {
+        padding: 10px 15px;
+    }
+}
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

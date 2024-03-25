@@ -1,15 +1,71 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
-{% endblock %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FlaskBlog</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>Blog</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-   <h1>Welcome to FlaskBlog</h1>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flash-messages">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        {% if user %}
+            <div class="user-info">
+                <p>Welcome, {{ user.vorname }}!</p>
+                <a href="/logout">Logout</a>
+            </div>
+        {% else %}
+            <div class="auth-actions">
+                <a href="/login">Login</a> | <a href="/signup">Register</a>
+            </div>
+        {% endif %}
+
+        <div class="posts-container">
+            <h2>Public Posts</h2>
+            {% for post in public_posts %}
+            <div class="post">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+            </div>
+            {% endfor %}
+            <h2>Private Posts</h2>
+            {% for post in private_posts %}
+            <div class="post">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if user %}
+        <div class="create-post-container">
+            <h2>Create Post</h2>
+            <form action="/create_post" method="post" class="create-post-form">
+                <div class="form-field">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" id="title" required>
+                </div>
+                <div class="form-field">
+                    <label for="content">Content:</label>
+                    <textarea name="content" id="content" required></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="public">Public:</label>
+                    <input type="checkbox" name="public" id="public" checked>
+                </div>
+                <div class="form-action">
+                    <input type="submit" value="Create Post">
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
