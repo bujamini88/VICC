@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session as flask_session, flash
 import sqlalchemy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 engine = sqlalchemy.create_engine("mariadb+mariadbconnector://root:Password@db:3306/mysql")
 Base = declarative_base()
