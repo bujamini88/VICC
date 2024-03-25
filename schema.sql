@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS posts (
     content TEXT NOT NULL,
     public BOOLEAN NOT NULL DEFAULT TRUE,
     user_id INT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

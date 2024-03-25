@@ -18,21 +18,22 @@
         {% endwith %}
         {% if user %}
             <div class="user-info">
-                <p>Welcome, {{ user.vorname }}!</p>
+                <p>Willkommen, {{ user.vorname }}!</p>
                 <a href="/logout">Logout</a>
             </div>
         {% else %}
             <div class="auth-actions">
-                <a href="/login">Login</a> | <a href="/signup">Register</a>
+                <a href="/login">Login</a> | <a href="/signup">Registrieren</a>
             </div>
         {% endif %}
 
         <div class="posts-container">
-            <h2>Public Posts</h2>
+            <h2>Öffentliche Posts</h2>
             {% for post in public_posts %}
             <div class="post">
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.content }}</p>
+                <p class="post-date">Posted am: {{ post.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
             </div>
             {% endfor %}
             <h2>Private Posts</h2>
@@ -40,24 +41,25 @@
             <div class="post">
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.content }}</p>
+                <p class="post-date">Posted am: {{ post.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
             </div>
             {% endfor %}
         </div>
         
         {% if user %}
         <div class="create-post-container">
-            <h2>Create Post</h2>
+            <h2>Post erstellen</h2>
             <form action="/create_post" method="post" class="create-post-form">
                 <div class="form-field">
-                    <label for="title">Title:</label>
+                    <label for="title">Titel:</label>
                     <input type="text" name="title" id="title" required>
                 </div>
                 <div class="form-field">
-                    <label for="content">Content:</label>
+                    <label for="content">Inhalt:</label>
                     <textarea name="content" id="content" required></textarea>
                 </div>
                 <div class="form-field">
-                    <label for="public">Public:</label>
+                    <label for="public">Öffentlich:</label>
                     <input type="checkbox" name="public" id="public" checked>
                 </div>
                 <div class="form-action">

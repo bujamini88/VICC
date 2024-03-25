@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session as flask_session, flash
 import sqlalchemy
 from sqlalchemy.orm import declarative_base, sessionmaker
+from datetime import datetime
+from sqlalchemy import DateTime
 
 engine = sqlalchemy.create_engine("mariadb+mariadbconnector://root:Password@db:3306/mysql")
 Base = declarative_base()
@@ -22,7 +24,7 @@ class Post(Base):
     content = sqlalchemy.Column(sqlalchemy.String(length=1000))
     public = sqlalchemy.Column(sqlalchemy.Boolean, default=True)  # True für public, False für private Posts
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))  # User identifikation pro Post
-
+    created_at = sqlalchemy.Column(DateTime, default=datetime.utcnow)
 
 Base.metadata.create_all(engine)
 

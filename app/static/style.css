@@ -95,3 +95,8 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+.post-date {
+    color: #777;
+    font-size: 0.8em;
+    margin-top: 10px;
+}
