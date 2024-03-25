@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: mysql
-      MYSQL_ROOT_PASSWORD: Password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
     expose:
       - 3306
@@ -33,6 +33,7 @@ services:
         - 5000
     volumes:
       - /opt/app:/app
+      - /opt/.env:/.env
     command: python app.py
     depends_on:
       - "db"
@@ -48,4 +49,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/portainer:/data
-     

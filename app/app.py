@@ -3,8 +3,12 @@ import sqlalchemy
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 from sqlalchemy import DateTime
+import os
+from dotenv import load_dotenv
 
-engine = sqlalchemy.create_engine("mariadb+mariadbconnector://root:Password@db:3306/mysql")
+load_dotenv('/.env')
+
+engine = sqlalchemy.create_engine(f"mariadb+mariadbconnector://root:{os.getenv('MYSQL_ROOT_PASSWORD')}@db:3306/mysql")
 Base = declarative_base()
 
 class User(Base):  
@@ -44,7 +48,7 @@ def addPost(title, content, public, user_id=None):
     db_session.commit()
 
 app = Flask(__name__)
-app.secret_key = '94b8f1a06e8a4e09614cb6335e7af197'  # Secret für Session MGMT
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default_fallback_secret_key')  # Secret für Session MGMT
 
 @app.route("/")
 def index():
