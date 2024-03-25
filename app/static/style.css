@@ -10,7 +10,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 800px; /* Increased max-width for better utilization of space on larger screens */
+    max-width: 800px; 
     background: white;
     padding: 20px;
     border-radius: 8px;
