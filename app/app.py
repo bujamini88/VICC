@@ -55,7 +55,7 @@ def index():
     if 'user_id' in flask_session:
         user_id = flask_session['user_id']
         user = db_session.query(User).filter_by(id=user_id).first()
-        private_posts = db_session.query(Post).filter_by(public=False, user_id=user_id).all()
+        private_posts = db_session.query(Post).filter_by(public=False).all()
 
     return render_template('index.html', public_posts=public_posts, private_posts=private_posts, user=user)
 
