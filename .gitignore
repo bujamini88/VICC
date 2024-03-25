@@ -1,0 +1,4 @@
+db/*
+portainer/*
+containerd/*
+.env
