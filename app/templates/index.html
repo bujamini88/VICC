@@ -7,6 +7,8 @@
 </head>
 <body>
     <div class="container">
+        <!-- Anzeigen der Flash-Meldungen: https://flask.palletsprojects.com/en/2.0.x/patterns/flashing/ 
+        und konditionelles Anzeigen von Webseiten teilen mit 'if und 'for': https://jinja.palletsprojects.com/en/3.0.x/templates/-->
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class="flash-messages">
@@ -16,6 +18,7 @@
             </ul>
           {% endif %}
         {% endwith %}
+        <!-- Hier wird die User Session gemanaged -->
         {% if user %}
             <div class="user-info">
                 <p>Willkommen, {{ user.vorname }}!</p>
@@ -23,12 +26,14 @@
             </div>
         {% else %}
             <div class="auth-actions">
+                <!-- Links für login oder Registrierung -->
                 <a href="/login">Login</a> | <a href="/signup">Registrieren</a>
             </div>
         {% endif %}
 
         <div class="posts-container">
             <h2>Öffentliche Posts</h2>
+            <!-- anzeigen der Posts -->
             {% for post in public_posts %}
             <div class="post">
                 <h3>{{ post.title }}</h3>
@@ -37,6 +42,7 @@
             </div>
             {% endfor %}
             <h2>Private Posts</h2>
+            <!-- anzeigen der privaten Posts -->
             {% for post in private_posts %}
             <div class="post">
                 <h3>{{ post.title }}</h3>
@@ -46,6 +52,7 @@
             {% endfor %}
         </div>
         
+        <!-- Hier wird das Formular zum erstellen von Posts angezeigt, aber nur wenn eine User-Session vorhanden ist  -->
         {% if user %}
         <div class="create-post-container">
             <h2>Post erstellen</h2>
@@ -70,6 +77,7 @@
         {% endif %}
     </div>
 <script>
+// JavaScript für die REST funktion zum für die Posts daten zu sammeln
 document.getElementById("create-post-form").addEventListener("submit", function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -79,13 +87,14 @@ document.getElementById("create-post-form").addEventListener("submit", function(
         public: formData.get("public") === "on"
     };
 
+    // die gesammelten daten für REST verarbeiten: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     fetch("/api/posts", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials: 'same-origin'
+        credentials: 'same-origin' // wichtig für Cookie
     })
     .then(response => response.json())
     .then(data => {
