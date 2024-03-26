@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session as flask_session, flash
+from flask import Flask, render_template, request, redirect, url_for, session as flask_session, flash, jsonify
 import sqlalchemy
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
@@ -50,6 +50,52 @@ def addPost(title, content, public, user_id=None):
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default_fallback_secret_key')  # Secret für Session MGMT
 
+# REST Funktionen
+@app.route("/api/posts", methods=["POST"])
+def create_post_api():
+    if 'user_id' not in flask_session:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    title = data.get("title")
+    content = data.get("content")
+    public = data.get("public", True)
+    user_id = flask_session.get('user_id')
+    
+    if not all([title, content]):
+        return jsonify({"error": "Missing data"}), 400
+    
+    addPost(title, content, public, user_id)
+    return jsonify({"message": "Post created successfully"}), 201
+
+@app.route("/api/users", methods=["POST"])
+def register_user_api():
+    data = request.json
+    vorname = data.get("vorname")
+    nachname = data.get("nachname")
+    email = data.get("email")
+    password = data.get("password")
+    
+    if not all([vorname, nachname, email, password]):
+        return jsonify({"error": "Missing data"}), 400
+    
+    addUser(vorname, nachname, email, password)
+    return jsonify({"message": "User registered successfully"}), 201
+
+@app.route("/api/login", methods=["POST"])
+def login_api():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+    
+    user = db_session.query(User).filter_by(email=email, password=password).first()
+    if user:
+        flask_session['user_id'] = user.id
+        return jsonify({"message": "Login successful"}), 200
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
+
+# HTML Funktionen
 @app.route("/")
 def index():
     user = None
@@ -114,3 +160,4 @@ def get_logged_in_user_id():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+

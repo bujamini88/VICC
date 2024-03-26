@@ -49,7 +49,7 @@
         {% if user %}
         <div class="create-post-container">
             <h2>Post erstellen</h2>
-            <form action="/create_post" method="post" class="create-post-form">
+            <form action="/create_post" method="post" class="create-post-form" id="create-post-form">
                 <div class="form-field">
                     <label for="title">Titel:</label>
                     <input type="text" name="title" id="title" required>
@@ -69,5 +69,34 @@
         </div>
         {% endif %}
     </div>
+<script>
+document.getElementById("create-post-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = {
+        title: formData.get("title"),
+        content: formData.get("content"),
+        public: formData.get("public") === "on"
+    };
+
+    fetch("/api/posts", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert("Post created successfully");
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+</script>
 </body>
 </html>
